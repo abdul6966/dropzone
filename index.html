@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Drop Section</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <Style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #9fa6a1;
+}
+
+.drop-area {
+    height:150px;
+    width:300px;
+  border: 2px solid white;
+  padding: 30px;
+  text-align: center;
+  border-radius:30px;
+  background-color: white;
+}
+.drop-area:hover{
+box-shadow:3px 3px 3px 3px black;
+}
+
+.drop-area h2 {
+  margin: 0;
+}
+
+.drop-area span {
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.drop-area button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.drop-area button:hover {
+  background-color: #0056b3;
+}
+
+.file-list {
+  margin-top: 20px;
+}
+
+
+  </Style>
+  <script>
+    $(document).ready(function() {
+  $('#fileDropArea').on('dragover', function(e) {
+    e.preventDefault();
+    $(this).addClass('dragover');
+  });
+
+  $('#fileDropArea').on('dragleave', function(e) {
+    e.preventDefault();
+    $(this).removeClass('dragover');
+  });
+
+  $('#fileDropArea').on('drop', function(e) {
+    e.preventDefault();
+    $(this).removeClass('dragover');
+    var files = e.originalEvent.dataTransfer.files;
+    handleFiles(files);
+  });
+
+  $('#uploadBtn').on('click', function() {
+    $('#fileInput').click();
+  });
+
+  $('#fileInput').on('change', function() {
+    var files = $(this)[0].files;
+    handleFiles(files);
+  });
+
+  function handleFiles(files) {
+    var fileList = $('.file-list');
+    fileList.empty();
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      var listItem = $('<div class="file-item"></div>').text(file.name);
+      fileList.append(listItem);
+    }
+  }
+});
+
+  </script>
+</head>
+<body>
+  <div id="fileDropArea" class="drop-area">
+    <h2>Drag and Drop Files Here</h2>
+    <span>or</span>
+    <button id="uploadBtn">Choose Files</button>
+    <input type="file" id="fileInput" multiple>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
